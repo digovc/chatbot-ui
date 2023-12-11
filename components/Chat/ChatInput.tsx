@@ -27,6 +27,7 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
+import { useInputFocusShortcut } from "@/hooks/useInputFocusShortcut";
 
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
@@ -46,6 +47,8 @@ export const ChatInput = ({
   showScrollDownButton,
 }: Props) => {
   const { t } = useTranslation('chat');
+
+  useInputFocusShortcut(() => textareaRef.current?.focus());
 
   const {
     state: { selectedConversation, messageIsStreaming, prompts },
@@ -312,8 +315,10 @@ export const ChatInput = ({
           )}
 
           <textarea
+            id="chat-input"
             ref={textareaRef}
             className="m-0 w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-10 text-black dark:bg-transparent dark:text-white md:py-3 md:pl-10"
+            autoFocus={true}
             style={{
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
