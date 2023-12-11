@@ -58,8 +58,6 @@ const Home = ({
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
 
-  useNewChatShortcut(() => handleNewConversation());
-
   const contextValue = useCreateReducer<HomeInitialState>({
     initialState,
   });
