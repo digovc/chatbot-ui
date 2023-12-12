@@ -40,7 +40,6 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
-import { useNewChatShortcut } from "@/hooks/useNewChatShortcut";
 
 interface Props {
   serverSideApiKeyIsSet: boolean;

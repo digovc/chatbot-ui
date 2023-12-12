@@ -27,7 +27,6 @@ import HomeContext from '@/pages/api/home/home.context';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
-import { useInputFocusShortcut } from "@/hooks/useInputFocusShortcut";
 
 interface Props {
   onSend: (message: Message, plugin: Plugin | null) => void;
@@ -47,8 +46,6 @@ export const ChatInput = ({
   showScrollDownButton,
 }: Props) => {
   const { t } = useTranslation('chat');
-
-  useInputFocusShortcut(() => textareaRef.current?.focus());
 
   const {
     state: { selectedConversation, messageIsStreaming, prompts },
@@ -258,6 +255,20 @@ export const ChatInput = ({
       window.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+        textareaRef.current?.focus();
+      }
+    }
+
+    window.addEventListener('keyup', handler as any);
+
+    return () => {
+      window.removeEventListener('keyup', handler as any);
+    };
+  }, [textareaRef])
 
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b from-transparent via-white to-white pt-6 dark:border-white/20 dark:via-[#343541] dark:to-[#343541] md:pt-2">

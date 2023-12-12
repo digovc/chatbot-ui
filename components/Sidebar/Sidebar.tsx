@@ -8,7 +8,6 @@ import {
 } from './components/OpenCloseButton';
 
 import Search from '../Search';
-import { useNewChatShortcut } from "@/hooks/useNewChatShortcut";
 
 interface Props<T> {
   isOpen: boolean;
@@ -42,8 +41,6 @@ const Sidebar = <T,>({
   handleDrop,
 }: Props<T>) => {
   const { t } = useTranslation('promptbar');
-
-  useNewChatShortcut(() => handleCreateItem());
 
   const allowDrop = (e: any) => {
     e.preventDefault();

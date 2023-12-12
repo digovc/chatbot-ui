@@ -113,18 +113,18 @@ export const Chatbar = () => {
 
   const handleClearConversations = () => {
     defaultModelId &&
-      homeDispatch({
-        field: 'selectedConversation',
-        value: {
-          id: uuidv4(),
-          name: t('New Conversation'),
-          messages: [],
-          model: OpenAIModels[defaultModelId],
-          prompt: DEFAULT_SYSTEM_PROMPT,
-          temperature: DEFAULT_TEMPERATURE,
-          folderId: null,
-        },
-      });
+    homeDispatch({
+      field: 'selectedConversation',
+      value: {
+        id: uuidv4(),
+        name: t('New Conversation'),
+        messages: [],
+        model: OpenAIModels[defaultModelId],
+        prompt: DEFAULT_SYSTEM_PROMPT,
+        temperature: DEFAULT_TEMPERATURE,
+        folderId: null,
+      },
+    });
 
     homeDispatch({ field: 'conversations', value: [] });
 
@@ -155,18 +155,18 @@ export const Chatbar = () => {
       saveConversation(updatedConversations[updatedConversations.length - 1]);
     } else {
       defaultModelId &&
-        homeDispatch({
-          field: 'selectedConversation',
-          value: {
-            id: uuidv4(),
-            name: t('New Conversation'),
-            messages: [],
-            model: OpenAIModels[defaultModelId],
-            prompt: DEFAULT_SYSTEM_PROMPT,
-            temperature: DEFAULT_TEMPERATURE,
-            folderId: null,
-          },
-        });
+      homeDispatch({
+        field: 'selectedConversation',
+        value: {
+          id: uuidv4(),
+          name: t('New Conversation'),
+          messages: [],
+          model: OpenAIModels[defaultModelId],
+          prompt: DEFAULT_SYSTEM_PROMPT,
+          temperature: DEFAULT_TEMPERATURE,
+          folderId: null,
+        },
+      });
 
       localStorage.removeItem('selectedConversation');
     }
@@ -205,6 +205,21 @@ export const Chatbar = () => {
       });
     }
   }, [searchTerm, conversations]);
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && event.key === 'N') {
+        handleNewConversation();
+        document.getElementById('chat-input')?.focus();
+      }
+    }
+
+    window.addEventListener('keyup', handler);
+
+    return () => {
+      window.removeEventListener('keyup', handler);
+    };
+  }, [handleNewConversation])
 
   return (
     <ChatbarContext.Provider
